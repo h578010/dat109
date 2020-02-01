@@ -5,7 +5,7 @@ import java.util.Map;
 
 public final class Brett {
 	
-	static Integer vinnerPos = 100;	
+	static int vinnerPos = 100;	
 	static Map <Integer, Integer> stiger = new HashMap <Integer, Integer>() {{
 		put(2, 38);
 		put(4, 14);

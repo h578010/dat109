@@ -6,9 +6,9 @@ public class Spiller {
 	private String navn;
 	private Brikke brikke;
 	
-	public Spiller(String navn, Brikke brikke) {
+	public Spiller(String navn) {
 		this.navn = navn;
-		this.brikke = brikke;
+		this.brikke = new Brikke();
 	}
 	
 	public String getNavn() {

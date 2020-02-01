@@ -1,19 +1,17 @@
 package no.hvl.dat109;
 
 public class Brikke {
-	private int brikkeNummer;
-	private Integer pos;
+	private int pos;
 	
-	public Brikke(int nummer) {
-		this.brikkeNummer = nummer;
+	public Brikke() {
 		this.pos = 1;
 	}
 
-	public Integer getPos() {
+	public int getPos() {
 		return this.pos;
 	}
 	
-	public void setPos(Integer nyPos) {
+	public void setPos(int nyPos) {
 		this.pos = nyPos;
 	}
 

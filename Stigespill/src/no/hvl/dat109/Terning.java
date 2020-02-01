@@ -2,15 +2,11 @@ package no.hvl.dat109;
 
 import java.util.Random;
 
-public class Terning {
-	Integer verdi = 0;
+public final class Terning {
 	
-	
-	public Integer trillTerning() {
+	public static int trillTerning() {
 		Random r = new Random();
-		verdi = (r.nextInt(6)+1);
-		
-		return verdi;
+		return (r.nextInt(6)+1);
 	}
 
 }
