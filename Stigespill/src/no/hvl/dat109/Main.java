@@ -20,20 +20,20 @@ public class Main {
 			}
 		}
 		if (antall < 2 || antall > 4) {
-			JOptionPane.showMessageDialog(frame, "Antall spillere må være mellom 2 og 4.");
+			JOptionPane.showMessageDialog(frame, "Antall spillere maa vaere mellom 2 og 4.");
 			System.exit(0);
 		}
 		
 		Stigespill nyttspill = new Stigespill();
 		
 		for (int i = 0; i < antall; i++) {
-			String navn = JOptionPane.showInputDialog(frame, "Skriv inn navn på spiller " + (i+1) + ": ");
+			String navn = JOptionPane.showInputDialog(frame, "Skriv inn navn paa spiller " + (i+1) + ": ");
 			nyttspill.leggTilSpiller(navn);
 		}
 		
 		Scanner scan = new Scanner(System.in);
 		while(!nyttspill.erFerdig()) {
-			System.out.println("Trykk enter for å starte neste runde.");
+			System.out.println("Trykk enter for aa starte neste runde.");
 			scan.nextLine();
 			nyttspill.spillRunde();
 		}

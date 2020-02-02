@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public class Stigespill {
-	public List<Spiller> spillere;
+	private List<Spiller> spillere;
 	private boolean spillFerdig = false;
 	
 	public Stigespill() {
@@ -30,9 +30,19 @@ public class Stigespill {
 	
 	/**
 	 * 
+	 * Returnerer listen av spillere
+	 * 
+	 */
+	public List<Spiller> getSpillere() {
+		return spillere;
+	}
+
+	/**
+	 * 
 	 * Spiller runde med stigespill
 	 * 
 	 */
+
 	
 	public void spillRunde() {
 		int terningVerdi;
