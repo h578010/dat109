@@ -1,14 +1,13 @@
 package no.hvl.dat109;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
 
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+/**
+ * 
+ * Klasse som definerer et stigespill
+ * 
+ */
 
 public class Stigespill {
 	public List<Spiller> spillere;
@@ -17,10 +16,23 @@ public class Stigespill {
 	public Stigespill() {
 		spillere = new ArrayList<Spiller>();
 	}
+	
+	/**
+	 * 
+	 * Legger til spillere i liste
+	 * @param navn på spillere
+	 * 
+	 */
 
 	public void leggTilSpiller(String navn) {
 		spillere.add(new Spiller(navn));
 	}
+	
+	/**
+	 * 
+	 * Spiller runde med stigespill
+	 * 
+	 */
 	
 	public void spillRunde() {
 		int terningVerdi;

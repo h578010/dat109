@@ -3,9 +3,17 @@ package no.hvl.dat109;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 
+ * Definerer et brett med 100 ruter
+ *
+ */
+
 public final class Brett {
 	
 	static int vinnerPos = 100;	
+	
+	//Stiger: Lagt til i andre runde av utviklingen
 	static Map <Integer, Integer> stiger = new HashMap <Integer, Integer>() {{
 		put(2, 38);
 		put(4, 14);
@@ -17,7 +25,8 @@ public final class Brett {
 		put(71, 91);
 		put(80, 100);
 	}};
-			
+	
+	//Slanger: Lagt til i andre runde av utviklingen			
 	static Map <Integer, Integer> slanger = new HashMap <Integer, Integer>() {{	
 		put(16, 6);
 		put(47, 26);
