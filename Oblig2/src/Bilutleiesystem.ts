@@ -11,6 +11,7 @@ export class Bilutleiesystem {
     }
 
     databaseSetup() {
+        console.log("Oppretter DB");
         this.db.run('CREATE TABLE IF NOT EXISTS kontorer (\
             id INTEGER PRIMARY KEY AUTOINCREMENT,\
             navn TEXT, \
@@ -38,14 +39,22 @@ export class Bilutleiesystem {
         this.db.run(sqlBil);
     }
     slettBil(regnr: string) {
-        this.db.run('DELETE FROM biler WHERE registreringsnummer = ' + regnr);
+        this.db.run('DELETE FROM biler WHERE registreringsnummer = "'+regnr+'"');
     }
 
-    listAlleBiler() {
-        this.db.run('SELECT * FROM biler');
-    }
+/*     listAlleBiler() {
+        this.db.run('SELECT * FROM biler', (error) => {
+            if (error) {
+                console.log("Something went wrong...");
+            } else {
+                console.log()
+            }
+        });
+    } */
 
-    visLedigeBiler() {
+    visLedigeBiler(utleiegruppe: Bilkategori, fraDato: Date, tilDato: Date) {
+        let fraEpoch = fraDato.getTime;
+        let tilEpoch = tilDato.getTime;
 
     }
 
@@ -58,7 +67,7 @@ export class Bilutleiesystem {
                 console.log("Something went wrong...");
                 return null;
             } else {
-                console.log("Ny id er:" + this.lastID)
+                //console.log("Ny id er:" + this.lastID)
                 kontor = new Kontor(navn, adr, pnr, psted, telefon);
                 return kontor;
             }
@@ -71,7 +80,6 @@ export class Bilutleiesystem {
         let tilEpoch = tilDato.getTime;
         let sqlReserver ='INSERT INTO reservasjoner (bilkategori, fraDato, tilDato) \
             VALUES("'+utleiegruppe+'","'+fraEpoch+'","'+tilEpoch+'")'
-
     }
 }
 
