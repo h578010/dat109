@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bilutleiesystem</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link href="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/bootstrap-table@1.16.0/dist/bootstrap-table.min.js"></script>
+    <link rel="stylesheet" href="styling.css">
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>Bilutleie</h1>
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Administrer biler</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addCar" class="btn btn-success" data-toggle="modal">
+                            <span>Legg til bil</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <table id="biler" data-url="listBiler" data-toggle="table" class="table table-striped table-hover"
+                data-show-refresh="true">
+                <thead>
+                    <tr>
+                        <th data-field="registreringsnummer">Registreringsnummer</th>
+                        <th data-field="merke">Merke</th>
+                        <th data-field="modell">Modell</th>
+                        <th data-field="farge">Farge</th>
+                        <th data-field="kategori">Kategori</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+        <h1>Kontorer</h1>
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Administrer kontorer</h2>
+                    </div>
+                    <div class="col-sm-6">
+                        <a href="#addOffice" class="btn btn-success" data-toggle="modal">
+                            <span>Legg til kontor</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <table id="kontorer" data-url="listKontorer" data-toggle="table" class="table table-striped table-hover"
+                data-show-refresh="true">
+                <thead>
+                    <tr>
+                        <th data-field="navn">Kontornavn</th>
+                        <th data-field="adresse">Adresse</th>
+                        <th data-field="postnummer">Postnummer</th>
+                        <th data-field="poststed">Poststed</th>
+                        <th data-field="telefon">Telefonnummer</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+
+
+    </div>
+    <!--Her kommer de modale dialogene-->
+    <div id="addCar" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Legg til bil</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Registreringsnummer</label>
+                            <input id="registreringsnummer" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Merke</label>
+                            <input id="merke" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Modell</label>
+                            <input id="modell" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Farge</label>
+                            <input id="farge" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <input id="kategori" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeCar" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="saveCar" class="btn btn-primary" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+    <div id="addOffice" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Legg til kontor</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Kontornavn</label>
+                            <input id="navn" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Adresse</label>
+                            <input id="adresse" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Postnummer</label>
+                            <input id="postnummer" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group col-md-8">
+                            <label>Poststed</label>
+                            <input id="poststed" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Telefonnummer</label>
+                            <input id="telefon" type="text" class="form-control" required>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="closeOffice" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="saveOffice" class="btn btn-primary" data-dismiss="modal">Save</button>
+            </div>
+        </div>
+    </div>
+    <script src="admin.js"></script>
+</body>
+
+</html>

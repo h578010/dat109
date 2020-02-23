@@ -25,37 +25,35 @@ export class Bilutleiesystem {
             merke TEXT, \
             modell TEXT, \
             farge TEXT, \
-            utleiegruppe TEXT);')
+            kategori TEXT);')
 
         this.db.run('CREATE TABLE IF NOT EXISTS reservasjoner (\
-            bilkategori TEXT PRIMARY KEY,\
+            kategori TEXT PRIMARY KEY,\
             fraDato TEXT, \
             tilDato TEXT);')
     }
 
-    registrerNyBil(regnr: string, merke: string, modell: string, farge: string, utleiegruppe: Bilkategori) {
-        let sqlBil ='INSERT INTO biler (registreringsnummer, merke, modell, farge, utleiegruppe) \
-        VALUES("'+regnr+'","'+merke+'","'+modell+'","'+farge+'","'+utleiegruppe+'")'
+    registrerNyBil(regnr: string, merke: string, modell: string, farge: string, kategori: Bilkategori) {
+        let sqlBil ='INSERT INTO biler (registreringsnummer, merke, modell, farge, kategori) \
+        VALUES("'+regnr+'","'+merke+'","'+modell+'","'+farge+'","'+kategori+'")'
         this.db.run(sqlBil);
     }
     slettBil(regnr: string) {
         this.db.run('DELETE FROM biler WHERE registreringsnummer = "'+regnr+'"');
     }
 
-/*     listAlleBiler() {
-        this.db.run('SELECT * FROM biler', (error) => {
-            if (error) {
-                console.log("Something went wrong...");
-            } else {
-                console.log()
-            }
-        });
-    } */
-
-    visLedigeBiler(utleiegruppe: Bilkategori, fraDato: Date, tilDato: Date) {
-        let fraEpoch = fraDato.getTime;
-        let tilEpoch = tilDato.getTime;
-
+    async listAlleBiler(): Promise<Bil[]> {
+        return new Promise<Bil[]>((resolve, reject) => {
+            this.db.all('SELECT * FROM biler', (error, rows) => {
+                if (error) {
+                    console.log("Something went wrong...");
+                    reject();
+                } else {
+                    console.log("All is good.");
+                    resolve(rows);
+                }
+            });
+        })
     }
 
     registrerKontor(navn: string, adr: string, pnr: number, psted: string, telefon: number) {
@@ -72,14 +70,32 @@ export class Bilutleiesystem {
                 return kontor;
             }
         });
-
+    }
+    async listAlleKontorer(): Promise<Kontor[]> {
+        return new Promise<Kontor[]>((resolve, reject) => {
+            this.db.all('SELECT * FROM kontorer', (error, rows) => {
+                if (error) {
+                    console.log("Something went wrong...");
+                    reject();
+                } else {
+                    console.log("All is good.");
+                    resolve(rows);
+                }
+            });
+        })
     }
 
-    reserverBil(utleiegruppe: Bilkategori, fraDato: Date, tilDato: Date) {
+    reserverBil(kategori: Bilkategori, fraDato: Date, tilDato: Date) {
         let fraEpoch = fraDato.getTime;
         let tilEpoch = tilDato.getTime;
-        let sqlReserver ='INSERT INTO reservasjoner (bilkategori, fraDato, tilDato) \
-            VALUES("'+utleiegruppe+'","'+fraEpoch+'","'+tilEpoch+'")'
+        let sqlReserver ='INSERT INTO reservasjoner (kategori, fraDato, tilDato) \
+            VALUES("'+kategori+'","'+fraEpoch+'","'+tilEpoch+'")'
+    }
+
+    visLedigeBiler(kategori: Bilkategori, fraDato: Date, tilDato: Date) {
+        let fraEpoch = fraDato.getTime;
+        let tilEpoch = tilDato.getTime;
+
     }
 }
 
