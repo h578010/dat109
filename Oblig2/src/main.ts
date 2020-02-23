@@ -41,12 +41,31 @@ epp.post('/leggTilReservasjon', (req, res) => {
     res.sendStatus(200);
 });
 
+epp.get('/listReservasjoner', async (req, res) => {
+    let reservasjoner = await bs.listReservasjoner();
+    res.send(reservasjoner);
+});
+
+epp.get('/q', async (req, res) => {
+    let fraDato = dateParser(req.query.fromDate);
+    let tilDato = dateParser(req.query.toDate);
+    let utleideBiler = await bs.antallUtleideBiler(fraDato, tilDato, req.query.category);
+    let eksisterendeBiler = await bs.antallBiler(req.query.category);
+    res.send({
+        ledige:eksisterendeBiler-utleideBiler
+    });
+});
+
+function dateParser(str: string): Date {
+    let fromParts = str.split('.');
+    return new Date(Date.UTC(parseInt(fromParts[2]), parseInt(fromParts[1])-1, parseInt(fromParts[0])));
+}
+
 
 epp.listen(9000);
 
 //bs.registrerNyBil('AB123456', 'Toyota', 'Corolla', 'svart', Bilkategori.B);
 //bs.registrerKontor('Fyllingsdalen', 'Helgeplasset 25', 5148, 'Fyllingsdalen', 91643839);
-
 //bs.slettBil('AB123456');
 
 

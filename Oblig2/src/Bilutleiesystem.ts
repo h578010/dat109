@@ -1,5 +1,6 @@
 import {Bilkategori, Bil} from './Bil';
 import {Kontor} from './Kontor';
+import {Reservasjon} from './Reservasjon';
 import * as sqlite from 'sqlite3';
 
 export class Bilutleiesystem {
@@ -28,7 +29,8 @@ export class Bilutleiesystem {
             kategori TEXT);')
 
         this.db.run('CREATE TABLE IF NOT EXISTS reservasjoner (\
-            kategori TEXT PRIMARY KEY,\
+            id INTEGER PRIMARY KEY AUTOINCREMENT,\
+            kategori TEXT, \
             fraDato TEXT, \
             tilDato TEXT);')
     }
@@ -85,17 +87,78 @@ export class Bilutleiesystem {
         })
     }
 
-    reserverBil(kategori: Bilkategori, fraDato: Date, tilDato: Date) {
-        let fraEpoch = fraDato.getTime;
-        let tilEpoch = tilDato.getTime;
+    reserverBil(kategori: Bilkategori, fraDato: number, tilDato: number) {
         let sqlReserver ='INSERT INTO reservasjoner (kategori, fraDato, tilDato) \
-            VALUES("'+kategori+'","'+fraEpoch+'","'+tilEpoch+'")'
+            VALUES("'+kategori+'","'+fraDato+'","'+tilDato+'")'
+        this.db.run(sqlReserver);
     }
 
-    visLedigeBiler(kategori: Bilkategori, fraDato: Date, tilDato: Date) {
-        let fraEpoch = fraDato.getTime;
-        let tilEpoch = tilDato.getTime;
+    async antallUtleideBiler(fraDato: Date, tilDato: Date, kategori: Bilkategori): Promise<number> {
+        let sql = 'SELECT COUNT(*) AS carcount FROM reservasjoner WHERE tilDato >' +fraDato.getTime()+ ' AND fraDato < '+tilDato.getTime();
+        return new Promise<number>((resolve, reject) => {
+            this.db.all(sql, (error, rows) => {
+                if (error) {
+                    console.log("Something went wrong...");
+                    console.dir(error);
+                    console.log(sql);
+                    reject();
+                } else {
+                    console.log("All is good.");
+                    resolve(rows[0].carcount);
+                }
+            });
+        })
+    }
+    async antallBiler(kategori: string): Promise<number> {
+        let sql = 'SELECT COUNT(*) AS carcount FROM biler WHERE kategori = "'+kategori+'"';
+        return new Promise<number>((resolve, reject) => {
+            this.db.all(sql, (error, rows) => {
+                if (error) {
+                    console.log("Something went wrong...");
+                    console.dir(error);
+                    console.log(sql);
+                    reject();
+                } else {
+                    console.log("All is good.");
+                    resolve(rows[0].carcount);
+                }
+            });
+        })
+    }
+    
+    private fromUTCToDate(num:number) {
+        let dato = new Date();
+        dato.setTime(num);
+        let result = "";
+        result += dato.getDate()+".";
+        result += (dato.getMonth()+1)+".";
+        result += dato.getFullYear();
+        return result;
+    }
 
+    async listReservasjoner(): Promise<Reservasjon[]> {
+        return new Promise<Reservasjon[]>((resolve, reject) => {
+            this.db.all('SELECT * FROM reservasjoner', (error, rows) => {
+                if (error) {
+                    console.log("Something went wrong...");
+                    reject();
+                } else {
+                    console.log("All is good.");
+                    let reservasjoner:Reservasjon[] = [];
+                    rows.forEach((row) => {
+                        let reservasjon = {
+                            id:row.id,
+                            kategori:row.kategori,
+                            fraDato:this.fromUTCToDate(row.fraDato),
+                            tilDato:this.fromUTCToDate(row.tilDato)
+                        }
+                        reservasjoner.push(reservasjon);
+
+                    })
+                    resolve(reservasjoner);
+                }
+            });
+        })
     }
 }
 
