@@ -13,6 +13,12 @@ export class Bilutleiesystem {
 
     databaseSetup() {
         console.log("Oppretter DB");
+        this.db.run('CREATE TABLE IF NOT EXISTS selskap (\
+            navn TEXT, \
+            adresse TEXT, \
+            postnummer INTEGER, \
+            poststed TEXT, \
+            telefon INTEGER);')
         this.db.run('CREATE TABLE IF NOT EXISTS kontorer (\
             id INTEGER PRIMARY KEY AUTOINCREMENT,\
             navn TEXT, \
@@ -153,7 +159,6 @@ export class Bilutleiesystem {
                             tilDato:this.fromUTCToDate(row.tilDato)
                         }
                         reservasjoner.push(reservasjon);
-
                     })
                     resolve(reservasjoner);
                 }

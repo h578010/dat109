@@ -13,7 +13,6 @@ export class Reservasjon {
   public tilDato: string;
     
     constructor(kategori: Bilkategori, fraDato: string, tilDato: string) {
-		
         this.kategori = kategori;
         this.fraDato = fraDato;
         this.tilDato = tilDato;

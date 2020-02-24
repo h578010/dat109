@@ -6,7 +6,20 @@ $(document).ready(function () {
         container: container,
         todayHighlight: true,
         autoclose: true,
+        orientation: 'auto top'
     };
     date_input.datepicker(options);
 });
 
+$('#saveReservation').on('click', (e) => {
+    let fraDato = dateParser($('#fraDato')[0].value);
+    let tilDato = dateParser($('#tilDato')[0].value);
+
+   axios.post('leggTilReservasjon', {
+       "kategori": $('#kategori')[0].value,
+       "fraDato": fraDato.getTime(),
+       "tilDato": tilDato.getTime()
+   }).then((res) => {
+        $('#reservasjoner').bootstrapTable('refresh')
+   });
+});

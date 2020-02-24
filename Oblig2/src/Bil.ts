@@ -23,7 +23,7 @@ export class Bil {
 	* @param merke bilmerket til bilen
     * @param modell modellen til bilen
     * @param farge fargen på bilen
-    * @param kategori utleiegruppen bilen tilhører -- bruke Object.freeze på denne?
+    * @param kategori utleiegruppen bilen tilhører 
     * @param ledig er bilen reservert eller ledig
     * @param Bilkategori kategori for bilstørrelse, A: liten, B: mellomstor, C: stor, D: stasjonsvogn.
     */
